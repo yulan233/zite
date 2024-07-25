@@ -5,3 +5,5 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.10", features = ["derive"] }
+comrak = "0.26"
+tera = "1.20.0"
