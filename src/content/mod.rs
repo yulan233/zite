@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
 
-fn md2html(buffer:String)->String {
+fn md2html(buffer:String,options:&Options)->String {
     // 返回的节点在提供的Arena中创建，并受其生命周期的约束
     let arena = Arena::new();
 
@@ -12,14 +12,20 @@ fn md2html(buffer:String)->String {
     let root = parse_document(
         &arena,
         &buffer,
-        &Options::default(),
+        options,
     );
 
     // 遍历root的所有后代节点
     for node in root.descendants() {
-        // 如果节点是Text类型，则替换其中的"my"为"your"
-        if let NodeValue::Text(ref mut text) = node.data.borrow_mut().value {
-            *text = text.replace("my", "your");
+        // 如果节点是math
+        if let NodeValue::Math(ref mut math) = node.data.borrow_mut().value {
+            if math.display_math{
+                math.literal.insert_str(0, "$$");
+                math.literal.push_str("$$");
+            }else{
+                math.literal.insert_str(0, "$");
+                math.literal.push_str("$");
+            }
         }
     }
 
@@ -64,12 +70,15 @@ mod tests {
     use super::*;
     #[test]
     fn test_md() {
+        let mut options = Options::default();
+        // options.extension.math_code=true;
+        options.extension.math_dollars=true;
         // 构建到文件的路径
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
         path.push("src/Zite.md"); // 添加文件名到路径
         let text = r_file2str(&path).unwrap();
         // println!("{}", text.unwrap());
-        let html=md2html(text);
+        let html=md2html(text,&options);
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
         path.push("src/Zite.html"); // 添加文件名到路径
         w_str2file(&path, &html).unwrap();
