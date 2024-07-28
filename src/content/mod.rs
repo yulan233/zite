@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
 
-fn md2html(buffer:String,options:&Options)->String {
+pub fn md2html(buffer:String,options:&Options)->String {
     // 返回的节点在提供的Arena中创建，并受其生命周期的约束
     let arena = Arena::new();
 
@@ -75,12 +75,12 @@ mod tests {
         options.extension.math_dollars=true;
         // 构建到文件的路径
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-        path.push("src/Zite.md"); // 添加文件名到路径
+        path.push("src\\Zite.md"); // 添加文件名到路径
         let text = r_file2str(&path).unwrap();
         // println!("{}", text.unwrap());
         let html=md2html(text,&options);
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-        path.push("src/Zite.html"); // 添加文件名到路径
+        path.push("src\\Zite.html"); // 添加文件名到路径
         w_str2file(&path, &html).unwrap();
     }
 }
