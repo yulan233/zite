@@ -1,4 +1,9 @@
 {% import "macros.html" as macros %}
+<head>
+    {% block head %}
+    <title>{% block title %}{% endblock title %}my blog</title>
+    {% endblock head %}
+</head>
 <h1>Hello</h1>
 
 {% if my_var %}
@@ -16,5 +21,4 @@
 {% endblock content %}
 
 {{ macros::hello_world(greeting="世界") }}
-{{ macros::pwd(greeting="nihao") }}
 {{ get_random(start=0, end=10) }}
