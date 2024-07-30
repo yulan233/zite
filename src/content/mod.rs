@@ -1,7 +1,5 @@
 use comrak::nodes::{AstNode, NodeValue};
 use comrak::{format_html, parse_document, Arena, Options};
-use std::fs::File;
-use std::io::{self, Read, Write};
 use std::path::Path;
 
 pub fn md2html(buffer:String,options:&Options)->String {
@@ -37,35 +35,13 @@ pub fn md2html(buffer:String,options:&Options)->String {
     String::from_utf8(html).unwrap()
 }
 
-fn r_file2str(path: &Path) -> io::Result<String> {
-    let mut file = File::open(path)?;
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
-    Ok(contents)
-}
 
-fn w_str2file(path: &Path, content: &str) -> io::Result<()> {
-    // 确保目标目录存在，如果不存在则创建
-    if let Some(parent) = path.parent() {
-        std::fs::create_dir_all(parent)?;
-    }
-
-    // 使用 OpenOptions 来打开文件，允许写入和创建
-    let mut file = std::fs::OpenOptions::new()
-        .write(true)
-        .create(true)
-        .open(path)?;
-
-    // 写入内容到文件
-    file.write_all(content.as_bytes())?;
-
-    Ok(())
-}
 
 #[cfg(test)]
 mod tests {
 
     use std::path::PathBuf;
+    use crate::util::file_about::{r_file2str, w_str2file};
 
     use super::*;
     #[test]
