@@ -1,0 +1,90 @@
+<head>
+    <title>Zite my blog</title>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$'],],
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js">
+        </script>
+    
+</head>
+<body>
+    <div class="post_content">
+        <!-- someother class -->
+        <div class="post_content_render">
+            
+    <pre><code>zite/
+├── src/
+│   ├── main.rs       # 主程序入口
+│   ├── cli/          # 命令行界面相关代码
+│   ├── config/       # 配置文件解析相关代码
+│   ├── content/      # 内容解析相关代码
+│   ├── render/       # 模板渲染相关代码
+│   └── plugins/      # 插件系统相关代码（如果有的话）
+├── templates/        # 默认模板
+├── examples/         # 示例站点
+├── tests/            # 测试用例
+├── Cargo.toml        # Rust项目配置文件
+└── README.md         # 项目说明文档
+</code></pre>
+<h2>核心功能</h2>
+<p>列出Zite应该具备的核心功能：</p>
+<ul>
+<li>
+<p><strong>内容解析</strong>：</p>
+<ul>
+<li>支持Markdown格式。</li>
+<li>解析元数据，如标题、日期、作者等。</li>
+</ul>
+</li>
+<li>
+<p><strong>模板渲染</strong>：</p>
+<ul>
+<li>支持使用某种模板语言（如Tera）。</li>
+<li>允许用户定义自己的模板。</li>
+</ul>
+</li>
+<li>
+<p><strong>内容组织</strong>：</p>
+<ul>
+<li>支持分类和标签。</li>
+<li>支持生成文章列表和归档页面。</li>
+</ul>
+</li>
+<li>
+<p><strong>命令行界面</strong>：</p>
+<ul>
+<li>提供命令来构建、预览和部署网站。</li>
+</ul>
+</li>
+<li>
+<p><strong>配置文件</strong>：</p>
+<ul>
+<li>允许通过配置文件来设置网站参数。</li>
+</ul>
+</li>
+<li>
+<p><strong>插件系统</strong>（高级功能）：</p>
+<ul>
+<li>定义插件API，允许第三方开发。</li>
+</ul>
+</li>
+</ul>
+<p><span data-math-style="inline">$\dbinom{n}{r}=\binom{n}{n-r}=C^n_r=C^n_{n-r}$</span>
+<span data-math-style="display">$$
+x^2
+$$</span></p>
+
+
+        </div>
+    </div>
+</body>

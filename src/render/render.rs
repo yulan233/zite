@@ -1,11 +1,16 @@
-use std::{collections::HashMap, error::Error, io::{self, Write}, path::{Path, PathBuf}};
+use std::{
+    collections::HashMap,
+    error::Error,
+    io::{self, Write},
+    path::{Path, PathBuf},
+};
 
 use serde_json::value::{to_value, Value};
 use tera::{try_get_value, Context, Result, Tera};
 
 pub fn tempalte() -> Tera {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src\\template\\**\\*");
+    path.push("src\\template\\**\\*.html");
 
     let mut tera = match Tera::new(path.to_str().unwrap()) {
         Ok(t) => t,
@@ -14,8 +19,16 @@ pub fn tempalte() -> Tera {
             ::std::process::exit(1);
         }
     };
-    tera.autoescape_on(vec!["html", ".sql"]);
+    // tera.autoescape_on(vec!["html", ".sql"]);
+    tera.add_raw_template(
+        "post_render.html",
+        &(r#"{% extends "post/post.html" %}
+{% block post_content %}
+    {% include ""#.to_owned()+"post/md2html/Zite.html"+r#"" %}
+{% endblock post_content %}"#),
+    ).unwrap();
     tera.register_filter("do_nothing", do_nothing_filter);
+    
     tera
 }
 
@@ -44,7 +57,10 @@ fn w_str2file(path: &Path, content: &str) -> io::Result<()> {
 
 #[cfg(test)]
 mod test1 {
-    use std::{error::Error, path::{self, PathBuf}};
+    use std::{
+        error::Error,
+        path::{self, PathBuf},
+    };
 
     use tera::{Context, Tera};
 
@@ -55,24 +71,20 @@ mod test1 {
     #[test]
     fn test_render() {
         let mut context = Context::new();
-        context.insert("username", &"Bob");
-        context.insert("numbers", &vec![1, 2, 3]);
-        context.insert("show_all", &false);
+        context.insert("title", &"Zite");
+        context.insert("math_enable", &true);
         // context.insert("bio", &"<script>alert('pwnd');</script>".to_string());
-
-        // A one off template
-        Tera::one_off("hello", &Context::new(), true).unwrap();
 
         // let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         // path.push("src\\template\\user\\profile.html");
-        match tempalte().render("user/profile.html", &context) {
+        match tempalte().render("post_render.html", &context) {
             Ok(s) => {
                 println!("{:?}", s);
                 let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-                path.push("src\\public\\profile.html"); // 添加文件名到路径
+                path.push("src\\public\\Zite.html"); // 添加文件名到路径
 
                 let _ = w_str2file(&path, &s);
-            },
+            }
             Err(e) => {
                 println!("Error: {}", e);
                 let mut cause = e.source();

@@ -80,7 +80,7 @@ mod tests {
         // println!("{}", text.unwrap());
         let html=md2html(text,&options);
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-        path.push("src\\Zite.html"); // 添加文件名到路径
+        path.push("src\\template\\post\\md2html\\Zite.html"); // 添加文件名到路径
         w_str2file(&path, &html).unwrap();
     }
 }
