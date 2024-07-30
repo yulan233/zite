@@ -10,7 +10,7 @@ use tera::{try_get_value, Context, Result, Tera};
 
 pub fn tempalte() -> Tera {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src\\template\\**\\*.html");
+    path.push("template\\**\\*.html");
 
     let mut tera = match Tera::new(path.to_str().unwrap()) {
         Ok(t) => t,
@@ -81,7 +81,7 @@ mod test1 {
             Ok(s) => {
                 println!("{:?}", s);
                 let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-                path.push("src\\public\\Zite.html"); // 添加文件名到路径
+                path.push("public\\Zite.html"); // 添加文件名到路径
 
                 let _ = w_str2file(&path, &s);
             }

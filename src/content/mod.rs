@@ -75,12 +75,12 @@ mod tests {
         options.extension.math_dollars=true;
         // 构建到文件的路径
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-        path.push("src\\Zite.md"); // 添加文件名到路径
+        path.push("md\\Zite.md"); // 添加文件名到路径
         let text = r_file2str(&path).unwrap();
         // println!("{}", text.unwrap());
         let html=md2html(text,&options);
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-        path.push("src\\template\\post\\md2html\\Zite.html"); // 添加文件名到路径
+        path.push("template\\post\\md2html\\Zite.html"); // 添加文件名到路径
         w_str2file(&path, &html).unwrap();
     }
 }
