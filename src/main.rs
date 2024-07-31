@@ -8,5 +8,6 @@ pub mod config;
 use cli::build::cli_build;
 
 fn main() {
-    cli_build();
+    let zite_config=config::ZiteConfig::new();
+    cli_build(&zite_config);
 }

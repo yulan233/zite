@@ -1,5 +1,7 @@
 use std::{fs::{self, File}, io::{self,Read, Write}, path::{Path, PathBuf}};
 
+use crate::config::ZiteConfig;
+
 pub fn r_file2str(path: &Path) -> io::Result<String> {
     let mut file = File::open(path)?;
     let mut contents = String::new();
@@ -24,7 +26,10 @@ pub fn w_str2file(path: &Path, content: &str) -> io::Result<()> {
 
     Ok(())
 }
-pub fn clear_generate_public_files(){
+pub fn clear_generate_public_files(zite_config:&ZiteConfig){
+
+    //TODO：路径修改功能完成后修改
+
     let mut path_public = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path_public.push("public");
     delete_files_in_directory(&path_public).unwrap();

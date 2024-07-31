@@ -3,7 +3,7 @@ use std::{collections::HashMap, error::Error, path::PathBuf};
 use serde_json::value::{to_value, Value};
 use tera::{try_get_value, Context, Result, Tera};
 
-use crate::util::file_about::w_str2file;
+use crate::{config::ZiteConfig, util::file_about::w_str2file};
 
 fn tempalte() -> Tera {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -38,7 +38,7 @@ fn do_nothing_filter(value: &Value, _: &HashMap<String, Value>) -> Result<Value>
     Ok(to_value(s).unwrap())
 }
 
-pub fn render_template() {
+pub fn render_template(zite_config:&ZiteConfig) {
     let mut context = Context::new();
     context.insert("title", &"Zite");
     context.insert("math_enable", &true);
@@ -48,7 +48,7 @@ pub fn render_template() {
     // path.push("src\\template\\user\\profile.html");
     match tempalte().render("post_render.html", &context) {
         Ok(s) => {
-            println!("{:?}", s);
+            // println!("{:?}", s);
             let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
             path.push("public\\Zite.html"); // 添加文件名到路径
 
@@ -71,6 +71,5 @@ mod test1 {
 
     #[test]
     fn test_render() {
-        
     }
 }

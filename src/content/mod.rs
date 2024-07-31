@@ -1,7 +1,8 @@
-use comrak::nodes::{AstNode, NodeValue};
+use comrak::nodes::NodeValue;
 use comrak::{format_html, parse_document, Arena, Options};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
+use crate::config::ZiteConfig;
 use crate::util::file_about::{r_file2str, w_str2file};
 
 fn md2html(buffer: String, options: &Options) -> String {
@@ -33,16 +34,14 @@ fn md2html(buffer: String, options: &Options) -> String {
     String::from_utf8(html).unwrap()
 }
 
-pub fn content_generate() {
-    let mut options = Options::default();
-    // options.extension.math_code=true;
-    options.extension.math_dollars = true;
+pub fn content_generate(zite_config:&ZiteConfig) {
+    let options =zite_config.get_cormark_options();
     // 构建到文件的路径
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
     path.push("md\\Zite.md"); // 添加文件名到路径
     let text = r_file2str(&path).unwrap();
     // println!("{}", text.unwrap());
-    let html = md2html(text, &options);
+    let html = md2html(text, options);
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
     path.push("template\\post\\md2html\\Zite.html"); // 添加文件名到路径
     w_str2file(&path, &html).unwrap();
