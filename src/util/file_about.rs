@@ -1,4 +1,4 @@
-use std::{fs::File, io::{self,Read, Write}, path::Path};
+use std::{fs::{self, File}, io::{self,Read, Write}, path::{Path, PathBuf}};
 
 pub fn r_file2str(path: &Path) -> io::Result<String> {
     let mut file = File::open(path)?;
@@ -22,5 +22,28 @@ pub fn w_str2file(path: &Path, content: &str) -> io::Result<()> {
     // 写入内容到文件
     file.write_all(content.as_bytes())?;
 
+    Ok(())
+}
+pub fn clear_generate_public_files(){
+    let mut path_public = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    path_public.push("public");
+    delete_files_in_directory(&path_public).unwrap();
+
+    let mut path_md2html = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    path_md2html.push("template");
+    path_md2html.push("post");
+    path_md2html.push("md2html");
+    delete_files_in_directory(&path_md2html).unwrap();
+}
+fn delete_files_in_directory(path:&Path) -> std::io::Result<()> {
+    println!("path:{:?}",path.file_name());
+    for entry in fs::read_dir(path)? {
+        let entry = entry?;
+        let path = entry.path();
+        println!("entity:{:?}",path.file_name());
+        if path.is_file() {
+            fs::remove_file(path)?;
+        }
+    }
     Ok(())
 }
