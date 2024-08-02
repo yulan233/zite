@@ -1,6 +1,6 @@
 use std::{fs::{self, File}, io::{self,Read, Write}, path::{Path, PathBuf}};
 
-use crate::config::ZiteConfig;
+use crate::config::{self, ZiteConfig};
 
 pub fn r_file2str(path: &Path) -> io::Result<String> {
     let mut file = File::open(path)?;
@@ -27,18 +27,10 @@ pub fn w_str2file(path: &Path, content: &str) -> io::Result<()> {
     Ok(())
 }
 pub fn clear_generate_public_files(zite_config:&ZiteConfig){
+    let config_path=&zite_config.config_path;
 
-    //TODO：路径修改功能完成后修改
-
-    let mut path_public = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path_public.push("public");
-    delete_files_in_directory(&path_public).unwrap();
-
-    let mut path_md2html = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path_md2html.push("template");
-    path_md2html.push("post");
-    path_md2html.push("md2html");
-    delete_files_in_directory(&path_md2html).unwrap();
+    delete_files_in_directory(&config_path.public).unwrap();
+    delete_files_in_directory(&config_path.template.join("post\\md2html")).unwrap();
 }
 fn delete_files_in_directory(path:&Path) -> std::io::Result<()> {
     println!("path:{:?}",path.file_name());
@@ -48,6 +40,9 @@ fn delete_files_in_directory(path:&Path) -> std::io::Result<()> {
         println!("entity:{:?}",path.file_name());
         if path.is_file() {
             fs::remove_file(path)?;
+        }else if path.is_dir(){
+            delete_files_in_directory(&path)?;
+            fs::remove_dir(path)?;
         }
     }
     Ok(())

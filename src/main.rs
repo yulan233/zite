@@ -4,6 +4,7 @@ pub mod plugins;
 pub mod render;
 pub mod util;
 pub mod config;
+pub mod init;
 
 use cli::build::cli_build;
 

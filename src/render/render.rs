@@ -1,15 +1,13 @@
-use std::{collections::HashMap, error::Error, path::PathBuf};
+use std::{collections::HashMap, error::Error};
 
 use serde_json::value::{to_value, Value};
 use tera::{try_get_value, Context, Result, Tera};
 
-use crate::{config::ZiteConfig, util::file_about::w_str2file};
+use crate::{config::{ConfigPath, ZiteConfig}, util::file_about::w_str2file};
 
-fn tempalte() -> Tera {
-    let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("template\\**\\*.html");
+fn tempalte(config_path:&ConfigPath) -> Tera {
 
-    let mut tera = match Tera::new(path.to_str().unwrap()) {
+    let mut tera = match Tera::new(config_path.template.join("**\\*.html").to_str().unwrap()) {
         Ok(t) => t,
         Err(e) => {
             println!("Parsing error(s): {}", e);
@@ -42,17 +40,15 @@ pub fn render_template(zite_config:&ZiteConfig) {
     let mut context = Context::new();
     context.insert("title", &"Zite");
     context.insert("math_enable", &true);
-    // context.insert("bio", &"<script>alert('pwnd');</script>".to_string());
+    let config_path=&zite_config.config_path;
 
-    // let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    // path.push("src\\template\\user\\profile.html");
-    match tempalte().render("post_render.html", &context) {
+    match tempalte(config_path).render("post_render.html", &context) {
         Ok(s) => {
             // println!("{:?}", s);
-            let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR")); // 获取项目根目录
-            path.push("public\\Zite.html"); // 添加文件名到路径
+            // let mut path = zite_config.config_path.public.clone(); // 获取项目根目录
+            // path.push("\\post\\Zite.html"); // 添加文件名到路径
 
-            let _ = w_str2file(&path, &s);
+            let _ = w_str2file(&config_path.public.join("post\\Zite.html"), &s);
         }
         Err(e) => {
             println!("Error: {}", e);
