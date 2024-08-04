@@ -8,12 +8,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
-    <div class="container mx-auto p-4 flex flex-col items-center justify-center flex-grow w-full">
+<body class="relative bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+    <!-- 导航栏 -->
+  <nav class="bg-white shadow w-full">
+    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div class="text-lg font-bold">博客标题</div>
+      <div class="md:flex space-x-4">
+        <a href="#" class="text-blue-500 hover:underline">首页</a>
+        <a href="#" class="text-blue-500 hover:underline">关于</a>
+        <a href="#" class="text-blue-500 hover:underline">分类</a>
+        <a href="#" class="text-blue-500 hover:underline">标签</a>
+      </div>
+    </div>
+  </nav>
+    <div class="container mx-auto p-4 flex flex-col justify-center flex-grow w-full">
       <!-- 左右结构 -->
-      <div class="flex w-full">
+      <div class="flex flex-col w-full md:flex-row">
         <!-- 左边部分 -->
-        <div class="w-3/4 pr-4">
+        <div class="md:w-3/4 pr-4">
           <div class="bg-white p-4 rounded shadow flex flex-col h-full">
             <!-- 博客信息 -->
             <div id="blog-list" class="flex-grow">
@@ -32,7 +44,7 @@
         </div>
   
         <!-- 右边部分 -->
-        <div class="w-1/4 pl-4 space-y-4">
+        <div class="md:w-1/4 pl-4 space-y-4 mt-4">
           <!-- 个人信息卡片 -->
           <div class="bg-white p-4 rounded shadow">
             <h2 class="text-lg font-bold mb-2">个人信息</h2>
@@ -356,7 +368,7 @@
           container.appendChild(pageButton);
         };
   
-        createButton('上一页', Math.max(currentPage - 1, 1), '', paginationTop);
+        createButton('上', Math.max(currentPage - 1, 1), '', paginationTop);
         
   
         const maxVisiblePages = 5;
@@ -368,12 +380,11 @@
           createButton(i, i, i === currentPage ? 'bg-gray-200' : '', paginationTop);
         }
 
-        createButton('下一页', Math.min(currentPage + 1, totalPages), '', paginationTop);
+        createButton('下', Math.min(currentPage + 1, totalPages), '', paginationTop);
   
         createButton('第一页', 1, '', paginationBottom);
         createButton('最后一页', totalPages, '', paginationBottom);
       }
-  
       displayBlogPosts(currentPage);
       displayPagination();
     </script>
