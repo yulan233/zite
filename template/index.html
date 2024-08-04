@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{blog_title}}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+    <div class="container mx-auto p-4 flex flex-col items-center justify-center flex-grow w-full">
+      <!-- 左右结构 -->
+      <div class="flex w-full">
+        <!-- 左边部分 -->
+        <div class="w-3/4 pr-4">
+          <div class="bg-white p-4 rounded shadow flex flex-col h-full">
+            <!-- 博客信息 -->
+            <div id="blog-list" class="flex-grow">
+              <!-- 分页列表 -->
+            </div>
+            <!-- 分页导航 -->
+            <div class="mt-4 flex flex-col items-center" id="pagination">
+              <!-- 上部分页导航 -->
+              <div class="flex space-x-2 mb-2" id="pagination-top">
+              </div>
+              <!-- 下部分页导航 -->
+              <div class="flex space-x-2" id="pagination-bottom">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- 右边部分 -->
+        <div class="w-1/4 pl-4 space-y-4">
+          <!-- 个人信息卡片 -->
+          <div class="bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-2">个人信息</h2>
+            <p>这里是个人信息内容...</p>
+          </div>
+          <!-- 归档卡片 -->
+          <div class="bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-2">归档</h2>
+            <ul>
+              <li><a href="#" class="text-blue-500 hover:underline">2023 年 1 月</a></li>
+              <li><a href="#" class="text-blue-500 hover:underline">2022 年 12 月</a></li>
+              <!-- 更多归档条目 -->
+            </ul>
+          </div>
+          <!-- 分类卡片 -->
+          <div class="bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-2">分类</h2>
+            <ul>
+              <li><a href="#" class="text-blue-500 hover:underline">技术</a></li>
+              <li><a href="#" class="text-blue-500 hover:underline">生活</a></li>
+              <!-- 更多分类条目 -->
+            </ul>
+          </div>
+          <!-- 标签卡片 -->
+          <div class="bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-2">标签</h2>
+            <div class="flex flex-wrap">
+              <a href="#" class="mr-2 mb-2 px-2 py-1 bg-blue-100 text-blue-500 rounded hover:bg-blue-200">标签1</a>
+              <a href="#" class="mr-2 mb-2 px-2 py-1 bg-blue-100 text-blue-500 rounded hover:bg-blue-200">标签2</a>
+              <!-- 更多标签条目 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script>
+      const blogPosts = [
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        { title: '博客标题1', description: '这里是博客的简短描述1...' },
+        { title: '博客标题2', description: '这里是博客的简短描述2...' },
+        { title: '博客标题3', description: '这里是博客的简短描述3...' },
+        { title: '博客标题4', description: '这里是博客的简短描述4...' },
+        { title: '博客标题5', description: '这里是博客的简短描述5...' },
+        { title: '博客标题6', description: '这里是博客的简短描述6...' },
+        { title: '博客标题7', description: '这里是博客的简短描述7...' },
+        { title: '博客标题8', description: '这里是博客的简短描述8...' },
+        { title: '博客标题9', description: '这里是博客的简短描述9...' },
+        { title: '博客标题10', description: '这里是博客的简短描述10...' },
+        // 更多博客条目
+      ];
+  
+      const postsPerPage = 10;
+      let currentPage = 1;
+  
+      function displayBlogPosts(page) {
+        const start = (page - 1) * postsPerPage;
+        const end = start + postsPerPage;
+        const pagePosts = blogPosts.slice(start, end);
+  
+        const blogList = document.getElementById('blog-list');
+        blogList.innerHTML = '';
+  
+        pagePosts.forEach(post => {
+          const postElement = document.createElement('div');
+          postElement.className = 'border-b pb-4';
+          postElement.innerHTML = `
+            <h2 class="text-xl font-bold"><a href="#" class="hover:text-blue-500">${post.title}</a></h2>
+            <p class="text-gray-600">${post.description}</p>
+          `;
+          blogList.appendChild(postElement);
+        });
+      }
+  
+      function displayPagination() {
+        const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+        const paginationTop = document.getElementById('pagination-top');
+        const paginationBottom = document.getElementById('pagination-bottom');
+        paginationTop.innerHTML = '';
+        paginationBottom.innerHTML = '';
+  
+        const createButton = (text, page, className, container) => {
+          const pageButton = document.createElement('a');
+          pageButton.href = '#';
+          pageButton.className = `px-4 py-2 bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 ${className}`;
+          pageButton.textContent = text;
+          pageButton.addEventListener('click', () => {
+            currentPage = page;
+            displayBlogPosts(currentPage);
+            displayPagination();
+          });
+          container.appendChild(pageButton);
+        };
+  
+        createButton('上一页', Math.max(currentPage - 1, 1), '', paginationTop);
+        
+  
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  
+        for (let i = startPage; i <= endPage; i++) {
+          createButton(i, i, i === currentPage ? 'bg-gray-200' : '', paginationTop);
+        }
+
+        createButton('下一页', Math.min(currentPage + 1, totalPages), '', paginationTop);
+  
+        createButton('第一页', 1, '', paginationBottom);
+        createButton('最后一页', totalPages, '', paginationBottom);
+      }
+  
+      displayBlogPosts(currentPage);
+      displayPagination();
+    </script>
+  </body>
+  </html>
