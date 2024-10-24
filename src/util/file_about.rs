@@ -1,6 +1,6 @@
 use std::{fs::{self, File}, io::{self,Read, Write}, path::{Path, PathBuf}};
 
-use crate::config::{self, ZiteConfig};
+use crate::config::ZiteConfig;
 
 pub fn r_file2str(path: &Path) -> io::Result<String> {
     let mut file = File::open(path)?;
