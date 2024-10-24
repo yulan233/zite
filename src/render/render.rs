@@ -3,7 +3,7 @@ use std::{collections::HashMap, error::Error};
 use serde_json::value::{to_value, Value};
 use tera::{try_get_value, Context, Result, Tera};
 
-use crate::{config::{ConfigPath, ZiteConfig}, util::file_about::w_str2file};
+use crate::{config::{config_path::ConfigPath, ZiteConfig}, util::file_about::w_str2file};
 
 fn tempalte(config_path:&ConfigPath) -> Tera {
 

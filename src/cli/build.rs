@@ -15,11 +15,9 @@ struct Cli {
 
 #[derive(Subcommand,Debug)]
 enum Build{
-    ///构建
     Generate,
-    ///清除
     Clear,
-    ///本地服务器
+    ///local server
     Server
 }
 
@@ -44,5 +42,5 @@ fn clear(zite_config:&ZiteConfig){
     clear_generate_public_files(zite_config);
 }
 fn server(zite_config:&ZiteConfig){
-
+    //TODO：启动本地服务器
 }

@@ -9,6 +9,6 @@ pub mod init;
 use cli::build::cli_build;
 
 fn main() {
-    let zite_config=config::ZiteConfig::new();
+    let zite_config=config::ZiteConfig::default();
     cli_build(&zite_config);
 }

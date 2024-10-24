@@ -51,15 +51,13 @@ pub fn content_generate(zite_config:&ZiteConfig) {
 
 #[cfg(test)]
 mod tests {
-    use std::path::PathBuf;
-
     use crate::config::ZiteConfig;
 
 
 
     #[test]
     fn test_md() {
-        let p=ZiteConfig::new();
+        let p=ZiteConfig::default();
         let pa=p.config_path;
 
         println!("{:?}",pa.md.join("Zite.md"));
